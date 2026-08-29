@@ -1,0 +1,11 @@
+# Python-Cache
+__pycache__/
+*.py[cod]
+*.class
+
+# Linux-Systemdateien
+.directory
+*~
+.fuse_hidden*
+.Trash-*
+.nfs*
