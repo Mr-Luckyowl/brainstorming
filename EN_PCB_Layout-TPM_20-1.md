@@ -1,19 +1,19 @@
-J1 (Mainboard-Header): 
-Connector_Generic:Conn_02x10_Odd_Even (Rastermaß: Standard 2,54 mm).
-⚠️ Crucial Correction:
-In the footprint editor, mark Pin 4 on the female header as "Not Connected" (NC) 
-and delete its corresponding copper pad.
-Place a small cross at that location on the silkscreen layer (F.SilkS).
-This represents the physically blocked hole (KEY), ensuring the module is keyed and protected against reverse polarity.
-
-U1 (TPM-Chip):
-Package_SO:TSSOP-28_4.4x9.7mm_P0.65mm (Passend für den Infineon SLB9665TT20 oder SLB9670 LPC).
-C1, C2, C3, C4 :
-Capacitor_SMD:C_0603_1608Metric ( 0603 it is still easy-to solid ).
-                ++ Wert: 100nF.
-(Pull-Up-Ressistor):
-        R1, R2 : Resistor_SMD:R_0603_1608Metric. 
-                ++ Wert: 10kΩ.
+## J1 (Mainboard-Header): 
+## Connector_Generic:Conn_02x10_Odd_Even (Rastermaß: Standard 2,54 mm).
+## ⚠️ Crucial Correction:
+## In the footprint editor, mark Pin 4 on the female header as "Not Connected" (NC) 
+## and delete its corresponding copper pad.
+## Place a small cross at that location on the silkscreen layer (F.SilkS).
+## This represents the physically blocked hole (KEY), ensuring the module is keyed and protected against reverse polarity.
+## 
+## U1 (TPM-Chip):
+## Package_SO:TSSOP-28_4.4x9.7mm_P0.65mm (Passend für den Infineon SLB9665TT20 oder SLB9670 LPC).
+## C1, C2, C3, C4 :
+## Capacitor_SMD:C_0603_1608Metric ( 0603 it is still easy-to solid ).
+##                ++ Wert: 100nF.
+## (Pull-Up-Ressistor):
+##         R1, R2 : Resistor_SMD:R_0603_1608Metric. 
+##                ++ Wert: 10kΩ.
 
 ## (Netlist).
 ## 
