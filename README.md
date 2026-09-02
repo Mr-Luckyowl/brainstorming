@@ -1,3 +1,11 @@
+## REM All new TOPICs will assign above and not the End of this file.
+
+
+
+## PCB Layout for a new TPM 2.0 Modul for a ASUS Z-97A.
+KiCAD and Netlist.
+
+
 # Fedora 44 RAM Hardening & Browser Containment (Brainstorming)
 
 This repository serves as an open brainstorming space for securing Fedora 44 against extreme memory allocations (e.g., 32 GB RAM leaks caused by Chromium/Electron processes) without compromising system stability or proprietary graphics drivers (Nvidia).
@@ -27,3 +35,4 @@ Since systemd-oomd kills rogue processes silently, `psi-notify` provides native 
 - **No Third-Party Tools:** System hardening must rely strictly on core Linux utilities and official repository packages to prevent supply-chain attacks (e.g., trojans or credential stealers).
 - **No Journal Access for Standard Users:** For security compliance, standard users must never be added to the global `systemd-journal` group, preventing accidental leaks of sensitive system data.
 - **Nvidia Driver Protection:** Global kernel parameters (like `mem=8G`) break proprietary GPU memory layouts. Resource constraints must safely reside at the user-slice level (`user.slice`).
+
