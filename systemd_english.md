@@ -1,3 +1,16 @@
+# Fedora 44 Process Containment: Hardening Microsoft Edge via systemd-run
+# Modern web browsers utilizing the Chromium architecture can trigger unpredictable memory loops or massive leaks via faulty scripts and extensions.
+# On systems running Fedora 44, a rogue browser process can # attempt to reserve up to 32 GB of RAM, exhausting available resources and leading to a complete operating system freeze. 
+# Legacy #resource-limiting tools such as ulimit are largely ineffective against modern # memory allocation methods like mmap.
+# To maintain system responsiveness and ensure that the core desktop environment remains uncompromised,
+# workloads can be isolated using cgroups v2 directly through the # # native systemd-run command interface.
+
+# Sandboxing command; like:
+systemd-run --user --scope -p MemoryMax=8G -p MemoryHigh=7.5G -p AllowedCPUs=2-3 /usr/bin/microsoft-edge-stable >/dev/null 2>&1
+# Watching with HTOP in realtime:
+htop -F /usr/bin/microsoft-edge-stable
+
+
 # Linux Commands
 
 # Check if resource limits are enabled?
@@ -8,6 +21,10 @@ sudo systemctl set-property user.slice MemoryHigh=7168M MemoryMax=8192M
 
 # Or restrict a specific program/application:
 systemd-run --user --scope -p MemoryMax=4G -p MemoryHigh=3.5G code
+
+# Watching with HTOP in realtime:
+htop -F /usr/bin/microsoft-edge-stable
+
 
 # e.g., Fedora-44
 # /etc/systemd/system.control/user.slice.d/50-MemoryHigh.conf

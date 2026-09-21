@@ -8,6 +8,14 @@ KiCAD and Netlist.
 
 # Fedora 44 RAM Hardening & Browser Containment (Brainstorming)
 
+# Fedora 44 Process Containment: Hardening Microsoft Edge via systemd-run
+# Modern web browsers utilizing the Chromium architecture can trigger unpredictable memory loops or massive leaks via faulty scripts and extensions.
+# On systems running Fedora 44, a rogue browser process can # attempt to reserve up to 32 GB of RAM, exhausting available resources and leading to a complete operating system freeze. 
+# Legacy #resource-limiting tools such as ulimit are largely ineffective against modern # memory allocation methods like mmap.
+# To maintain system responsiveness and ensure that the core desktop environment remains uncompromised,
+# workloads can be isolated using cgroups v2 directly through the # # native systemd-run command interface.
+And how to do, please see systemd_english.md
+
 This repository serves as an open brainstorming space for securing Fedora 44 against extreme memory allocations (e.g., 32 GB RAM leaks caused by Chromium/Electron processes) without compromising system stability or proprietary graphics drivers (Nvidia).
 
 ## 🧠 Problem Statement
