@@ -28,20 +28,20 @@ htop -F /usr/bin/microsoft-edge-stable
 
 
 # e.g., Fedora-44
-# /etc/systemd/system.control/user.slice.d/50-MemoryHigh.conf
+/etc/systemd/system.control/user.slice.d/50-MemoryHigh.conf
 
 #
 # Does not work in WSL2!
 #
-# Because psi-notify requires the PSI interfaces (/proc/pressure/memory) to be active in the Linux kernel.
-# Search for documentation under Fedora-44:
+Because psi-notify requires the PSI interfaces (/proc/pressure/memory) to be active in the Linux kernel.
+Search for documentation under Fedora-44:
 # Note: It is important to include the quotation marks " " !!!
 dnf5 search "*-doc"
-#
+
 # For Fedora-44 and any other Linux distribution, you should install 'links' or 'lynx' to read all man pages and docs directly in the TERMINAL!!
-#
-# Like this: links /usr/share/doc/python-systemd/html/index.html
-# Simple and efficient. Press (F10) for the menu within the terminal.
+
+Like this: links /usr/share/doc/python-systemd/html/index.html
+Simple and efficient. Press (F10) for the menu within the terminal.
 
 Docs:
 man systemctl
