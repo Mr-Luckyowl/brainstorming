@@ -1,3 +1,10 @@
+BITTE beachtet die Daei PCB_Layout-TPM_20.1.md, weil EN_PCB_Layout-TPM_20-1.md ungültig ist.
+
+This is now EN_PCB_Layout-TPM_20-1.md obsolate, pls see PCB_Layout-TPM_20.1.md
+
+
+
+
 ## J1 (Mainboard-Header): 
 ## Connector_Generic:Conn_02x10_Odd_Even (Rastermaß: Standard 2,54 mm).
 ## ⚠️ Crucial Correction:
