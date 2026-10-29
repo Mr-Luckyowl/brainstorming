@@ -8,32 +8,37 @@ KiCAD and Netlist.
 ...
 ```
 
-Gut aufgepasst! Wenn man die Logik nicht starr überwacht, baut die Automatik genau solche Zuordnungs-Fehler.
 
 <FollowUp>
-## Das korrigierte Routing-Diagramm (Netlist).
-## 
-##
-   Netz-Name    | Von Pfostenleiste (J1)  | Zu Infineon-Chip (U1) | Zusatz-Verbindung / Hinweis
-   -------------+-------------------------+-----------------------+----------------------------------
-   +3V3         | Pin 1                   | Pin 28 & Pin 18       | C1-C4 an diese Leitung hängen
-   GND          | Pin 2, Pin 12, Pin 17   | Pin 14 & Pin 24       | Gegenpol von C1-C4 hier anbinden
-   LAD0         | Pin 3                   | Pin 4                 | LPC Data 0
-   [KEY]        | Pin 4                   | [GEBLOCKT]            | Kein Pin, kein Loch, kein Kupfer!
-   LAD1         | Pin 5                   | Pin 5                 | LPC Data 1
-   LAD2         | Pin 7                   | Pin 7                 | LPC Data 2
-   LAD3         | Pin 8                   | Pin 8                 | LPC Data 3
-   LFRAME#      | Pin 9                   | Pin 2                 | LPC Frame-Signal
-   LCLK         | Pin 10                  | Pin 1                 | 33 MHz Systemtakt (KRITISCH!)
-   LRESET#      | Pin 11                  | Pin 3                 | Bus-Reset
-   SERIRQ       | Pin 16                  | Pin 10                | Serieller Interrupt
-   CLKRUN#      | Pin 18                  | Pin 11                | Über R1 (10k) an +3V3 hängen
-   LPCPD#       | Pin 19                  | Pin 12                | Über R2 (10k) an +3V3 hängen
+### 🔀 Corrected Hardware Routing Matrix (Netlist Schematic)
+
+When connecting nets inside the KiCAD Schematic Editor (`eeschema`), follow this exact layout plan to link the Motherboard Header (`J1`) directly to the Infineon Security Chip (`U1`):
+
+| Net Name | From Header (J1) | To Infineon IC (U1) | Additional Connections / Engineering Notes |
+| :--- | :--- | :--- | :--- |
+| **+3V3** | Pin 1 | Pin 28 & Pin 18 | Connect the positive side of decoupling capacitors `C1-C4` to this line. |
+| **GND** | Pin 2, Pin 12, Pin 17 | Pin 14 & Pin 24 | Connect the negative side of decoupling capacitors `C1-C4` to this ground plane. |
+| **LAD0** | Pin 3 | Pin 4 | LPC Data Line 0. |
+| **[KEY]** | Pin 4 | **[BLOCKED]** | **No Pin, no hole, no copper!** Physical polarization safety key. |
+| **LAD1** | Pin 5 | Pin 5 | LPC Data Line 1. |
+| **LAD2** | Pin 7 | Pin 7 | LPC Data Line 2. |
+| **LAD3** | Pin 8 | Pin 8 | LPC Data Line 3. |
+| **LFRAME#**| Pin 9 | Pin 2 | LPC Frame Signal (Active Low). |
+| **LCLK** | Pin 10 | Pin 1 | **CRITICAL:** 33 MHz PCI/LPC system clock line. |
+| **LRESET#**| Pin 11 | Pin 3 | Bus Hardware Reset (Active Low). |
+| **SERIRQ** | Pin 16 | Pin 10 | Serialized Interrupt Request line. |
+| **CLKRUN#**| Pin 18 | Pin 11 | Must be pulled up to **+3V3** via resistor **R1 (10 kΩ)**. |
+| **LPCPD#** | Pin 19 | Pin 12 | Must be pulled up to **+3V3** via resistor **R2 (10 kΩ)**. |
+
+---
 
 
 </FollowUp>
 
 # Source: 
+### 📐 KiCAD Netlist (20-1 Pin Header Source)
+
+```lisp
 (export (version D)
   (design
     (source "ASUS_Z97A_TPM20.kicad_sch")
@@ -58,55 +63,52 @@ Gut aufgepasst! Wenn man die Logik nicht starr überwacht, baut die Automatik ge
   (nets
     (net (code "1") (name "GND")
       (node (ref "J1") (pin "2"))
-      (node (ref "J1") (pin "16"))
-      (node (ref "U1") (pin "14")) ; VSS Chip
+      (node (ref "J1") (pin "12"))
+      (node (ref "J1") (pin "17"))
+      (node (ref "U1") (pin "14"))
+      (node (ref "U1") (pin "24"))
       (node (ref "C1") (pin "2")))
     (net (code "2") (name "+3.3V")
       (node (ref "J1") (pin "1"))
-      (node (ref "U1") (pin "28")) ; VDD Chip
+      (node (ref "U1") (pin "28"))
+      (node (ref "U1") (pin "18"))
       (node (ref "C1") (pin "1")))
-    (net (code "3") (name "LPC_LCLK")
+    (net (code "3") (name "LPC_LAD0")
       (node (ref "J1") (pin "3"))
-      (node (ref "U1") (pin "1"))  ; PCI Clock Input
-    )
-    (net (code "4") (name "LPC_LFRAME")
+      (node (ref "U1") (pin "4")))
+    (net (code "4") (name "LPC_LAD1")
       (node (ref "J1") (pin "5"))
-      (node (ref "U1") (pin "2"))  ; Frame Signal
-    )
-    (net (code "5") (name "LPC_LRESET")
+      (node (ref "U1") (pin "5")))
+    (net (code "5") (name "LPC_LAD2")
       (node (ref "J1") (pin "7"))
-      (node (ref "U1") (pin "3"))  ; Reset Input
-    )
-    (net (code "6") (name "LPC_LAD0")
-      (node (ref "J1") (pin "11"))
-      (node (ref "U1") (pin "4"))  ; Multiplexed Command/Address/Data 0
-    )
-    (net (code "7") (name "LPC_LAD1")
+      (node (ref "U1") (pin "7")))
+    (net (code "6") (name "LPC_LAD3")
+      (node (ref "J1") (pin "8"))
+      (node (ref "U1") (pin "8")))
+    (net (code "7") (name "LPC_LFRAME")
       (node (ref "J1") (pin "9"))
-      (node (ref "U1") (pin "5"))  ; Multiplexed Command/Address/Data 1
-    )
-    (net (code "8") (name "LPC_LAD2")
-      (node (ref "J1") (pin "13"))
-      (node (ref "U1") (pin "6"))  ; Multiplexed Command/Address/Data 2
-    )
-    (net (code "9") (name "LPC_LAD3")
-      (node (ref "J1") (pin "15"))
-      (node (ref "U1") (pin "7"))  ; Multiplexed Command/Address/Data 3
-    )
-    (net (code "10") (name "TPM_PP") ; Physical Presence
+      (node (ref "U1") (pin "2")))
+    (net (code "8") (name "LPC_LCLK")
+      (node (ref "J1") (pin "10"))
+      (node (ref "U1") (pin "1")))
+    (net (code "9") (name "LPC_LRESET")
+      (node (ref "J1") (pin "11"))
+      (node (ref "U1") (pin "3")))
+    (net (code "10") (name "LPC_SERIRQ")
+      (node (ref "J1") (pin "16"))
+      (node (ref "U1") (pin "10")))
+    (net (code "11") (name "CLKRUN")
       (node (ref "J1") (pin "18"))
-      (node (ref "U1") (pin "10"))
-    )
-    (net (code "11") (name "LPC_SERIRQ")
-      (node (ref "J1") (pin "17"))
-      (node (ref "U1") (pin "25")) ; Serialized IRQ
-    )
-    (net (code "12") (name "+3.3V_STANDBY")
+      (node (ref "U1") (pin "11")))
+    (net (code "12") (name "LPCPD")
       (node (ref "J1") (pin "19"))
-      (node (ref "U1") (pin "21")) ; Standby Power
-    )
+      (node (ref "U1") (pin "12")))
   )
 )
+```
+
+---
+
 
 # Control: ## 📐 PCB Layout & Netlist Specification for ASUS Z-97A TPM 2.0 Module (LPC Bus)
 
