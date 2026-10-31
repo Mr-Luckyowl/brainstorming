@@ -1,3 +1,7 @@
+## Please read the Issue for corrections!
+Thank you and sorry.
+
+
 ## PCB Layout for a new TPM 2.0 Modul for a ASUS Z-97A.
 KiCAD and Netlist.
 
